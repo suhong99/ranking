@@ -1,0 +1,76 @@
+.wrapper {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+
+.table {
+  width: 100%;
+  height: 700px;
+  overflow-y: auto;
+}
+
+.table_head,
+.table_body {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table_head th,
+.table_body td {
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.table_head th {
+  background-color: #f9fafb;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.table_head th:hover {
+  background-color: #e2e8f0;
+}
+
+.pagecount_container {
+  align-self: self-end;
+}
+
+.pagecount_select {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #f3f4f6;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pagecount_select:focus {
+  outline: none;
+  border-color: #4c9dff;
+  box-shadow: 0 0 5px rgba(76, 157, 255, 0.3);
+}
+
+.pagecount_select option {
+  background-color: #ffffff;
+}
+
+.pagecount_select:hover {
+  background-color: #e2e8f0;
+}
