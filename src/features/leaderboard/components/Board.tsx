@@ -4,23 +4,18 @@ import PageCount from './PageCount';
 import TableBody from './TableBody';
 import TableHead from './TableHead';
 import { useFetchData } from '../hooks/useFetchData';
-import { SortCriteria } from '../../../shared/const/data';
+import { OrderType, SortCriteria } from '../../../shared/const/data';
+import { sortData } from '../helper/func';
+import styles from '../LeaderBoard.module.css';
 
 const Board = () => {
   const [selected, setSelected] = useState<SortCriteria>('score');
-  const [order, setOrder] = useState<'asc' | 'desc'>('desc');
+  const [order, setOrder] = useState<OrderType>('desc');
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(10);
   const [data, isLoading] = useFetchData();
 
-  // 정렬 및 페이징 적용
-  const sortedData = [...data].sort((a, b) => {
-    if (order === 'asc') {
-      return a[selected] - b[selected];
-    } else {
-      return b[selected] - a[selected];
-    }
-  });
+  const sortedData = sortData({ data, criteria: selected, order });
 
   const startIndex = (page - 1) * count;
   const paginatedData = sortedData.slice(startIndex, startIndex + count);
@@ -36,13 +31,13 @@ const Board = () => {
   };
 
   return (
-    <div>
+    <section className={styles.wrapper}>
       {isLoading ? (
         <div> 로딩중입니다 </div>
       ) : (
         <>
           <PageCount count={count} setCount={setCount} />
-          <table>
+          <table className={styles.table}>
             <TableHead selected={selected} order={order} onSort={handleSort} />
             <TableBody data={paginatedData} startIndex={startIndex} />
           </table>
@@ -54,7 +49,7 @@ const Board = () => {
           />
         </>
       )}
-    </div>
+    </section>
   );
 };
 

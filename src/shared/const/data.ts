@@ -17,5 +17,6 @@ export type ExposedData = ServerData & {
 
 export type SortCriteria = 'score' | 'wins' | 'losses' | 'winRate';
 
+export type OrderType = 'asc' | 'desc';
 export const DATA_URL =
   'https://gateway.pinata.cloud/ipfs/bafkreia2tigtk5kv5x6mptrscob7rwyvooyzte2j7luimkfssvm3m2zf54';

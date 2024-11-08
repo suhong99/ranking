@@ -2,11 +2,11 @@ import { Outlet } from 'react-router';
 
 const RootLayout = () => {
   return (
-    <div>
-      <main>
+    <>
+      <main className="main_content">
         <Outlet />
       </main>
-    </div>
+    </>
   );
 };
 
