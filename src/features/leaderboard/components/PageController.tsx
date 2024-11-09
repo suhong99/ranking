@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import styles from '../LeaderBoard.module.css';
+import { usePagination } from '../hooks/usePagination';
 
 type PageControllerProps = {
   page: number;
@@ -13,53 +14,48 @@ const PageController: React.FC<PageControllerProps> = ({
   totalItems,
   count,
 }) => {
-  const totalPages = Math.ceil(totalItems / count);
-
-  const pageGroup = Math.floor((page - 1) / 10);
-  const startPage = pageGroup * 10 + 1;
-  const endPage = Math.min(startPage + 9, totalPages);
-
-  const pageButtons = [];
-
-  useEffect(() => {
-    if (page > totalItems / count) setPage(totalItems / count);
-  }, [count, page, setPage, totalItems]);
-
-  for (let i = startPage; i <= endPage; i++) {
-    pageButtons.push(
-      <button
-        key={i}
-        onClick={() => setPage(i)}
-        disabled={i === page}
-        style={{
-          fontWeight: i === page ? 'bold' : 'normal',
-          cursor: i === page ? 'default' : 'pointer',
-        }}
-      >
-        {i}
-      </button>
-    );
-  }
-
-  const handlePrevGroup = () => {
-    if (startPage > 1) {
-      setPage(startPage - 1);
-    }
-  };
-
-  const handleNextGroup = () => {
-    if (endPage < totalPages) {
-      setPage(endPage + 1);
-    }
-  };
+  const {
+    pageButtons,
+    moveNextGroup,
+    movePrevGroup,
+    startPage,
+    endPage,
+    totalPages,
+  } = usePagination({
+    page,
+    setPage,
+    totalItems,
+    count,
+  });
 
   return (
-    <div>
-      <button onClick={handlePrevGroup} disabled={startPage === 1}>
+    <div className={styles.paging_container}>
+      <button
+        className={styles.paging_btn}
+        onClick={movePrevGroup}
+        disabled={startPage === 1}
+      >
         &lt;
       </button>
-      {pageButtons}
-      <button onClick={handleNextGroup} disabled={endPage === totalPages}>
+      <div className={styles.paging_btns}>
+        {pageButtons.map((btnPage) => (
+          <button
+            key={btnPage}
+            onClick={() => setPage(btnPage)}
+            disabled={btnPage === page}
+            className={`${styles.paging_btn} ${
+              btnPage === page ? styles.active : ''
+            }`}
+          >
+            {btnPage}
+          </button>
+        ))}
+      </div>
+      <button
+        className={styles.paging_btn}
+        onClick={moveNextGroup}
+        disabled={endPage === totalPages}
+      >
         &gt;
       </button>
     </div>
