@@ -37,10 +37,16 @@ const Board = () => {
       ) : (
         <>
           <PageCount count={count} setCount={setCount} />
-          <table className={styles.table}>
-            <TableHead selected={selected} order={order} onSort={handleSort} />
-            <TableBody data={paginatedData} startIndex={startIndex} />
-          </table>
+          <div className={styles.tableWrapper}>
+            <table className={styles.table}>
+              <TableHead
+                selected={selected}
+                order={order}
+                onSort={handleSort}
+              />
+              <TableBody data={paginatedData} startIndex={startIndex} />
+            </table>
+          </div>
           <PageController
             page={page}
             setPage={setPage}
