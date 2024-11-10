@@ -27,7 +27,7 @@ export const usePagination = ({ page, setPage, totalItems, count }: props) => {
     if (endPage < totalPages) setPage(endPage + 1);
   };
 
-  // 10~20으로 갈 경우 페이지가 넘을 수 있음
+  // 10개씩 보기에서 -> 20으로 갈 경우 페이지가 넘을 수 있음
   useEffect(() => {
     if (page > totalPages) setPage(totalPages);
   }, [page, setPage, totalPages]);
