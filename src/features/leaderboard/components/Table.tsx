@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import {
   OrderType,
   SortCriteria,
@@ -13,11 +14,17 @@ type TableHeadProps = {
   onSort: (column: SortCriteria) => void;
 };
 
-export const TableHead: React.FC<TableHeadProps> = ({
-  selected,
-  order,
-  onSort,
-}) => {
+const TableWrapper: React.FC<{
+  children: ReactNode;
+}> = ({ children }) => {
+  return (
+    <div className={styles.tableWrapper}>
+      <table className={styles.table}>{children}</table>
+    </div>
+  );
+};
+
+const TableHead: React.FC<TableHeadProps> = ({ selected, order, onSort }) => {
   return (
     <thead className={styles.table_head}>
       <tr>
@@ -25,18 +32,11 @@ export const TableHead: React.FC<TableHeadProps> = ({
           <th
             key={label}
             onClick={() => sortableKey && onSort(sortableKey)}
-            style={{
-              cursor: sortableKey ? 'pointer' : 'default',
-              borderTop:
-                sortableKey === selected && order === 'asc'
-                  ? '2px solid #4c9dff'
-                  : 'none',
-              borderBottom:
-                sortableKey === selected && order === 'desc'
-                  ? '2px solid #4c9dff'
-                  : 'none',
-            }}
-            className={className ? styles[className] : undefined}
+            className={`${className && styles[className]} ${
+              sortableKey === selected && order === 'asc'
+                ? styles.sortedAsc
+                : styles.sortedDesc
+            }`}
           >
             {label} {sortableKey === selected && (order === 'asc' ? '↑' : '↓')}
           </th>
@@ -74,4 +74,7 @@ const TableBody: React.FC<{
   );
 };
 
-export default TableBody;
+export const Table = Object.assign(TableWrapper, {
+  TableHead,
+  TableBody,
+});
