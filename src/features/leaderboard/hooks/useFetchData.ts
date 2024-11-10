@@ -11,6 +11,15 @@ export const useFetchData = () => {
       try {
         const response = await fetch(DATA_URL);
         const data = await response.json();
+        data.map((e: ServerData) => {
+          const winRate =
+            e.wins + e.losses === 0 ? 0 : e.wins / (e.wins + e.losses);
+          return {
+            ...e,
+            winRate,
+          };
+        });
+
         setData(
           data.map((e: ServerData) => {
             const winRate =

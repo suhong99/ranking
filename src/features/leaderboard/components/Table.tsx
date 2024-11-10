@@ -28,19 +28,21 @@ const TableHead: React.FC<TableHeadProps> = ({ selected, order, onSort }) => {
   return (
     <thead className={styles.table_head}>
       <tr>
-        {Category.map(({ label, sortableKey, className }) => (
-          <th
-            key={label}
-            onClick={() => sortableKey && onSort(sortableKey)}
-            className={`${className && styles[className]} ${
-              sortableKey === selected && order === 'asc'
-                ? styles.sortedAsc
-                : styles.sortedDesc
-            }`}
-          >
-            {label} {sortableKey === selected && (order === 'asc' ? '↑' : '↓')}
-          </th>
-        ))}
+        {Category.map(({ label, sortableKey, className }) => {
+          return (
+            <th
+              key={label}
+              onClick={() => sortableKey && onSort(sortableKey)}
+              className={`${className && styles[className]} ${
+                sortableKey === selected &&
+                (order === 'asc' ? styles.sortedAsc : styles.sortedDesc)
+              }`}
+            >
+              {label}
+              {sortableKey === selected && (order === 'asc' ? '↑' : '↓')}
+            </th>
+          );
+        })}
       </tr>
     </thead>
   );
